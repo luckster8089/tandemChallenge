@@ -11,7 +11,7 @@ function App() {
         <Route
           exact
           path="/"
-          render={() =>  <Trivia />}
+          render={() =>  <Trivia data={jsonData} />}
         />
         <Route
           exact
