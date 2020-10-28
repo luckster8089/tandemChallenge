@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import jsonData from './triviaQuestions.json';
+import Trivia from './Trivia';
 
 function App() {
+  const trivia = jsonData.map(questions => (
+    <Trivia
+      questions={questions.questions}
+      answers={questions.correct}
+      incorrectAnswers={questions.incorrect}
+    />
+  ))
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Trivia data={jsonData} />
     </div>
   );
 }
