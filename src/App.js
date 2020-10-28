@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import jsonData from './triviaQuestions.json';
 import Trivia from './Trivia';
 import TriviaGame from './TriviaGame';
@@ -11,7 +10,7 @@ function App() {
         <Route
           exact
           path="/"
-          render={() =>  <Trivia data={jsonData} />}
+          render={() =>  <Trivia />}
         />
         <Route
           exact
