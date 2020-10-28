@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TriviaGame() {
+export default function TriviaGame({ data }) {
     return (
         <div>
             
