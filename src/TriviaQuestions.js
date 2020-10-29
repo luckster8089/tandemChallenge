@@ -10,7 +10,12 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import TriviaAnswerCheck from './TriviaAnswerCheck'
+import TriviaAnswerCheck from './TriviaAnswerCheck';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import styles from './styles/TriviaQuestionsStyles.js'
 
 
@@ -24,22 +29,37 @@ function TriviaQuestions({ questions, classes }) {
       answers: []
     })
     const [end, setEnd] = useState('')
+    const [open, setOpen] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
 
     function handleChange(e) {
         setValue(e.target.value)
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault();
         if (value === questions[questionNumber].correct) {
+          setIsCorrect(true)
+          setOpen(true)
+          setError(false)
           setScore(currScore => currScore + 1);
-          setError(false);
           setQuestionNumber(currQuestion => currQuestion + 1)
           setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
-          
-        } else if (value !== questions[questionNumber].correct) {
-          setError(true);
+        } else if (value === ""){
+          setIsCorrect(false)
+          setError(true)
+        } else {
+          setIsCorrect(false)
+          setOpen(true)
+          setError(false)
+          setQuestionNumber(currQuestion => currQuestion + 1)
+          setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
         } 
+    }
+
+    function handleClose(e) {
+      setOpen(false)
+      setValue("")
     }
     
     useEffect(() => {
@@ -58,22 +78,6 @@ function TriviaQuestions({ questions, classes }) {
             <h3>You've Completed {questionNumber} / 10 Questions</h3>
             <h3>Your Score: {score}</h3>
             <div className={classes.questionContainer}>
-              {/* <h3>{question.questionName}</h3>
-              <form onSubmit={handleSubmit}>
-                <FormControl component="fieldset" error={error}>
-                <FormLabel component="legend">Select an Answer</FormLabel>
-                <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
-                  {question.answers.map((q, index) => (
-                    <FormControlLabel key={index} value={q} control={<Radio />} label={q}/>
-                  ))}
-                </RadioGroup>
-                <div className={classes.buttonContainer}>
-                  <Button type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
-                </div>
-                </FormControl>
-              </form> */}
               <form onSubmit={handleSubmit}>
             <Card className={classes.cardRoot} variant="outlined">
               <CardContent>
@@ -98,6 +102,13 @@ function TriviaQuestions({ questions, classes }) {
               </Button>
             </div>
             </form>
+            <TriviaAnswerCheck 
+              open={open} 
+              handleClose={handleClose} 
+              selectedAnswer={value} 
+              correctAnswer={questions[questionNumber].correct} 
+              isCorrect={isCorrect}
+              />
             </div>
             {end}
         </div>
