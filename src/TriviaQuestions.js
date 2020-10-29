@@ -37,20 +37,21 @@ export default function TriviaQuestions({ questions }) {
 
     return (
         <div>
+            <h2>You've Completed {questionNumber} / 10 </h2>
             <h2>Your Score: {score}</h2>
             <h3>{question.questionName}</h3>
             <form onSubmit={handleSubmit}>
-            <FormControl component="fieldset">
-            <FormLabel component="legend">Select an Answer</FormLabel>
-            <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
-              {question.answers.map((q, index) => (
-                <FormControlLabel key={index} value={q} control={<Radio />} label={q}/>
-              ))}
-            </RadioGroup>
-            <Button type="submit" variant="contained" color="primary">
+              <FormControl component="fieldset">
+              <FormLabel component="legend">Select an Answer</FormLabel>
+              <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
+                {question.answers.map((q, index) => (
+                  <FormControlLabel key={index} value={q} control={<Radio />} label={q}/>
+                ))}
+              </RadioGroup>
+              <Button type="submit" variant="contained" color="primary">
                 Submit
-            </Button>
-          </FormControl>
+              </Button>
+              </FormControl>
             </form>
         </div>
     )
