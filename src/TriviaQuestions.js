@@ -6,6 +6,11 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import TriviaAnswerCheck from './TriviaAnswerCheck'
 import styles from './styles/TriviaQuestionsStyles.js'
 
 
@@ -31,6 +36,7 @@ function TriviaQuestions({ questions, classes }) {
           setError(false);
           setQuestionNumber(currQuestion => currQuestion + 1)
           setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
+          
         } else if (value !== questions[questionNumber].correct) {
           setError(true);
         } 
@@ -52,7 +58,7 @@ function TriviaQuestions({ questions, classes }) {
             <h3>You've Completed {questionNumber} / 10 Questions</h3>
             <h3>Your Score: {score}</h3>
             <div className={classes.questionContainer}>
-              <h3>{question.questionName}</h3>
+              {/* <h3>{question.questionName}</h3>
               <form onSubmit={handleSubmit}>
                 <FormControl component="fieldset" error={error}>
                 <FormLabel component="legend">Select an Answer</FormLabel>
@@ -67,7 +73,31 @@ function TriviaQuestions({ questions, classes }) {
                   </Button>
                 </div>
                 </FormControl>
-              </form>
+              </form> */}
+              <form onSubmit={handleSubmit}>
+            <Card className={classes.cardRoot} variant="outlined">
+              <CardContent>
+                <Typography className={classes.cardTitle} color="textPrimary" gutterBottom>
+                {question.questionName}
+                </Typography>
+                <Typography className={classes.cardAnswers} color="textSecondary">
+                  <FormControl component="fieldset" error={error}>
+                  <FormLabel component="legend">Select an Answer</FormLabel>
+                  <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
+                    {question.answers.map((q, index) => (
+                      <FormControlLabel key={index} value={q} control={<Radio />} label={q}/>
+                    ))}
+                  </RadioGroup>
+                  </FormControl>
+              </Typography>
+              </CardContent>
+            </Card>
+            <div className={classes.buttonContainer}>
+              <Button type="submit" className={classes.button} variant="contained" color="primary">
+                Submit
+              </Button>
+            </div>
+            </form>
             </div>
             {end}
         </div>
