@@ -7,15 +7,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import TriviaAnswerCheck from './TriviaAnswerCheck';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import TriviaAnswerForm from './TriviaAnswerForm';
 import styles from './styles/TriviaQuestionsStyles.js'
 
 
@@ -28,7 +23,6 @@ function TriviaQuestions({ questions, classes }) {
       questionName: '',
       answers: []
     })
-    const [end, setEnd] = useState('')
     const [open, setOpen] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
@@ -64,7 +58,7 @@ function TriviaQuestions({ questions, classes }) {
     
     useEffect(() => {
       if (questionNumber > 9) {
-        setEnd(`You Scored ${score} out of ${questionNumber}`)
+        // TODO create ending 
         return 
       } // Base Case
       const question = questions[questionNumber].question
@@ -78,7 +72,9 @@ function TriviaQuestions({ questions, classes }) {
             <h3>You've Completed {questionNumber} / 10 Questions</h3>
             <h3>Your Score: {score}</h3>
             <div className={classes.questionContainer}>
-              <form onSubmit={handleSubmit}>
+
+            <TriviaAnswerForm handleSubmit={handleSubmit} question={question} error={error} value={value} handleChange={handleChange} />
+              {/* <form onSubmit={handleSubmit}>
             <Card className={classes.cardRoot} variant="outlined">
               <CardContent>
                 <Typography className={classes.cardTitle} color="textPrimary" gutterBottom>
@@ -101,16 +97,15 @@ function TriviaQuestions({ questions, classes }) {
                 Submit
               </Button>
             </div>
-            </form>
+            </form> */}
             <TriviaAnswerCheck 
               open={open} 
               handleClose={handleClose} 
               selectedAnswer={value} 
               correctAnswer={questions[questionNumber].correct} 
               isCorrect={isCorrect}
-              />
+            />
             </div>
-            {end}
         </div>
     )
 }
