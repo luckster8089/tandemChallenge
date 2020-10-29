@@ -5,6 +5,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import TriviaEnd from './TriviaEnd';
 
 export default function TriviaQuestions({ questions }) {
     const [questionNumber, setQuestionNumber] = useState(0)
@@ -14,6 +15,7 @@ export default function TriviaQuestions({ questions }) {
       questionName: '',
       answers: []
     })
+    const [end, setEnd] = useState('')
 
     function handleChange(e) {
         setValue(e.target.value)
@@ -24,11 +26,16 @@ export default function TriviaQuestions({ questions }) {
         if (value === questions[questionNumber].correct) {
           setScore(currScore => currScore + 1)
         }
+
         setQuestionNumber(currQuestion => currQuestion + 1)
         setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
     }
     
     useEffect(() => {
+      if (questionNumber > 9) {
+        setEnd(`You Scored ${score} out of ${questionNumber}`)
+        return 
+      } // Base Case
       const question = questions[questionNumber].question
       const answers = questions[questionNumber].incorrect.concat(questions[questionNumber].correct)
       setQuestion({ questionName: question, answers: answers })
@@ -53,6 +60,7 @@ export default function TriviaQuestions({ questions }) {
               </Button>
               </FormControl>
             </form>
+            {end}
         </div>
     )
 }
