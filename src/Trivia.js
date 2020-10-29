@@ -2,27 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-
-const styles = {
-  root: {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonContainer: {
-    width: "12.5%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  button: {
-    width: "50%",
-    margin: ".5rem",
-    borderRadius: ".8rem"
-  }
-}
+import styles from './styles/TriviaStyles';
 
 function Trivia({ classes }) {
     const history = useHistory();
