@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import TriviaAnswerCheck from './TriviaAnswerCheck';
 import TriviaAnswerForm from './TriviaAnswerForm';
+import TriviaEnd from './TriviaEnd';
 import styles from './styles/TriviaQuestionsStyles.js'
 
+// Move score to App
+// Pass score down to ending component
+// if question number > questions.length history push to new component
+// pass score to component from app 
+// deliver ending message
 
-function TriviaQuestions({ questions, classes }) {
+function TriviaQuestions({ questions, classes, gameDone }) {
     const [questionNumber, setQuestionNumber] = useState(0)
     const [value, setValue] = useState('')
     const [score, setScore] = useState(0)
@@ -16,6 +23,23 @@ function TriviaQuestions({ questions, classes }) {
     })
     const [open, setOpen] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
+
+    const history = useHistory();
+
+    useEffect(() => {
+      if (questions[questionNumber] === undefined) {
+        return <TriviaEnd score={score} questions={questions.length} /> 
+      }
+      const question = questions[questionNumber].question
+      const answers = questions[questionNumber].incorrect.concat(questions[questionNumber].correct)
+      setQuestion({ questionName: question, answers: answers })
+    }, [questionNumber, questions, score, history])
+
+
+    console.log(questions.length - 1)
+    // if(questionNumber > questions.length - 1) {
+    //   return alert("done")
+    // }
 
     function handleChange(e) {
         setValue(e.target.value)
@@ -46,56 +70,26 @@ function TriviaQuestions({ questions, classes }) {
       setOpen(false)
       setValue("")
     }
-    
-    useEffect(() => {
-      if (questionNumber > 9) {
-        // TODO create ending 
-        return 
-      } // Base Case
-      const question = questions[questionNumber].question
-      const answers = questions[questionNumber].incorrect.concat(questions[questionNumber].correct)
-      setQuestion({ questionName: question, answers: answers })
-    }, [questionNumber, questions])
 
+    if (questions[questionNumber] === undefined) {
+        return <TriviaEnd score={score} questions={questions.length}/> 
+    }
 
     return (
         <div className={classes.root}>
+            <h2>Welcome to Tandem Trivia!</h2>
             <h3>You've Completed {questionNumber} / 10 Questions</h3>
             <h3>Your Score: {score}</h3>
             <div className={classes.questionContainer}>
-
             <TriviaAnswerForm handleSubmit={handleSubmit} question={question} error={error} value={value} handleChange={handleChange} />
-              {/* <form onSubmit={handleSubmit}>
-            <Card className={classes.cardRoot} variant="outlined">
-              <CardContent>
-                <Typography className={classes.cardTitle} color="textPrimary" gutterBottom>
-                {question.questionName}
-                </Typography>
-                <Typography className={classes.cardAnswers} color="textSecondary">
-                  <FormControl component="fieldset" error={error}>
-                  <FormLabel component="legend">Select an Answer</FormLabel>
-                  <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
-                    {question.answers.map((q, index) => (
-                      <FormControlLabel key={index} value={q} control={<Radio />} label={q}/>
-                    ))}
-                  </RadioGroup>
-                  </FormControl>
-              </Typography>
-              </CardContent>
-            </Card>
-            <div className={classes.buttonContainer}>
-              <Button type="submit" className={classes.button} variant="contained" color="primary">
-                Submit
-              </Button>
-            </div>
-            </form> */}
             <TriviaAnswerCheck 
               open={open} 
               handleClose={handleClose} 
               selectedAnswer={value} 
               correctAnswer={questions[questionNumber].correct} 
               isCorrect={isCorrect}
-            />
+              questionNumber={questionNumber}
+            /> 
             </div>
         </div>
     )
