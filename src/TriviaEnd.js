@@ -53,7 +53,6 @@ function TriviaEnd({ score, classes, questions }) {
           closeByeModal={closeByeModal}  
           />
         </div>
-        
     </div>
   )
 }
