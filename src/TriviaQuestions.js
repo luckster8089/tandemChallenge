@@ -35,12 +35,6 @@ function TriviaQuestions({ questions, classes, gameDone }) {
       setQuestion({ questionName: question, answers: answers })
     }, [questionNumber, questions, score, history])
 
-
-    console.log(questions.length - 1)
-    // if(questionNumber > questions.length - 1) {
-    //   return alert("done")
-    // }
-
     function handleChange(e) {
         setValue(e.target.value)
     }

@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles/TriviaAnswerCheckStyles';
 
-function TriviaAnswerCheck({ open, handleClose, correctAnswer, selectedAnswer, isCorrect, classes, questionNumber }) {
+function TriviaAnswerCheck({ open, handleClose, correctAnswer, selectedAnswer, isCorrect, classes }) {
     return (
       <Dialog
         open={open}

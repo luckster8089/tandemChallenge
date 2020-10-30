@@ -13,7 +13,6 @@ import styles from './styles/TriviaQuestionsStyles.js'
 
 function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handleChange }) {
     return (
-            <>
             <form onSubmit={handleSubmit}>
             <Card className={classes.cardRoot} variant="outlined">
               <CardContent>
@@ -38,7 +37,6 @@ function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handl
               </Button>
             </div>
             </form>
-            </>
     )
 }
 
