@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import styles from './styles/TriviaStyles';
-import TriviaBye from './TriviaBye';
 
 function Trivia({ classes }) {
     const history = useHistory();

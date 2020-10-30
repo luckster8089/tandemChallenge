@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
@@ -10,8 +10,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styles from './styles/TriviaQuestionsStyles.js'
+import { QuestionAnswerSharp } from '@material-ui/icons';
 
-function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handleChange }) {
+function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handleChange, answers }) {
+
     return (
             <form onSubmit={handleSubmit}>
             <Card className={classes.cardRoot} variant="outlined">
@@ -23,7 +25,7 @@ function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handl
                   <FormControl component="fieldset" error={error}>
                   <FormLabel component="legend">Select an Answer</FormLabel>
                   <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
-                    {question.answers.map((q, index) => (
+                    {answers.map((q, index) => (
                       <FormControlLabel key={index} value={q} control={<Radio />} label={q}/>
                     ))}
                   </RadioGroup>
@@ -40,4 +42,4 @@ function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handl
     )
 }
 
-export default withStyles(styles)(TriviaAnswerForm);
+export default withStyles(styles)(React.memo(TriviaAnswerForm));

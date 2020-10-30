@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TriviaAnswerCheck from './TriviaAnswerCheck';
 import TriviaAnswerForm from './TriviaAnswerForm';
 import TriviaEnd from './TriviaEnd';
 import styles from './styles/TriviaQuestionsStyles.js'
 
-// Move score to App
-// Pass score down to ending component
-// if question number > questions.length history push to new component
-// pass score to component from app 
-// deliver ending message
+// Shuffle Answers
+function shuffle(arr) {
+  let currentIndex = arr.length, temporaryValue, randomIndex;
 
-function TriviaQuestions({ questions, classes, gameDone }) {
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1;
+
+    temporaryValue = arr[currentIndex]
+    arr[currentIndex] = arr[randomIndex]
+    arr[randomIndex] = temporaryValue
+  }
+  return arr;
+}
+
+// Main Function Component
+function TriviaQuestions({ questions, classes }) {
     const [questionNumber, setQuestionNumber] = useState(0)
     const [value, setValue] = useState('')
     const [score, setScore] = useState(0)
@@ -24,7 +33,7 @@ function TriviaQuestions({ questions, classes, gameDone }) {
     const [open, setOpen] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
-    const history = useHistory();
+
 
     useEffect(() => {
       if (questions[questionNumber] === undefined) {
@@ -33,7 +42,7 @@ function TriviaQuestions({ questions, classes, gameDone }) {
       const question = questions[questionNumber].question
       const answers = questions[questionNumber].incorrect.concat(questions[questionNumber].correct)
       setQuestion({ questionName: question, answers: answers })
-    }, [questionNumber, questions, score, history])
+    }, [questionNumber, questions, score])
 
     function handleChange(e) {
         setValue(e.target.value)
@@ -46,8 +55,6 @@ function TriviaQuestions({ questions, classes, gameDone }) {
           setOpen(true)
           setError(false)
           setScore(currScore => currScore + 1);
-          setQuestionNumber(currQuestion => currQuestion + 1)
-          setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
         } else if (value === ""){
           setIsCorrect(false)
           setError(true)
@@ -55,15 +62,18 @@ function TriviaQuestions({ questions, classes, gameDone }) {
           setIsCorrect(false)
           setOpen(true)
           setError(false)
-          setQuestionNumber(currQuestion => currQuestion + 1)
-          setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
         } 
     }
 
+
     function handleClose(e) {
       setOpen(false)
+      setQuestionNumber(currQuestion => currQuestion + 1)
       setValue("")
+      setQuestion({questionName: questions[questionNumber].question, answers: questions[questionNumber].incorrect})
     }
+
+    const randomAnswers = useMemo(() => shuffle(question.answers), [question.answers, shuffle])
 
     if (questions[questionNumber] === undefined) {
         return <TriviaEnd score={score} questions={questions.length}/> 
@@ -75,7 +85,7 @@ function TriviaQuestions({ questions, classes, gameDone }) {
             <h3>You've Completed {questionNumber} / 10 Questions</h3>
             <h3>Your Score: {score}</h3>
             <div className={classes.questionContainer}>
-            <TriviaAnswerForm handleSubmit={handleSubmit} question={question} error={error} value={value} handleChange={handleChange} />
+            <TriviaAnswerForm handleSubmit={handleSubmit} question={question} answers={randomAnswers} error={error} value={value} handleChange={handleChange} />
             <TriviaAnswerCheck 
               open={open} 
               handleClose={handleClose} 
