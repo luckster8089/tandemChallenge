@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
@@ -10,7 +10,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styles from './styles/TriviaQuestionsStyles.js'
-import { QuestionAnswerSharp } from '@material-ui/icons';
 
 function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handleChange, answers }) {
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/styles';
 import TriviaQuestions from './TriviaQuestions';
 import styles from './styles/TriviaGameStyles';
