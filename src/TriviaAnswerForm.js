@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import styles from './styles/TriviaQuestionsStyles.js'
 
 function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handleChange, answers }) {
-
     return (
             <form onSubmit={handleSubmit}>
             <Card className={classes.cardRoot} variant="outlined">
@@ -41,4 +40,4 @@ function TriviaAnswerForm({ classes, handleSubmit, question, error, value, handl
     )
 }
 
-export default withStyles(styles)(React.memo(TriviaAnswerForm));
+export default withStyles(styles)(TriviaAnswerForm);
