@@ -2,28 +2,8 @@ import React, { useState } from 'react';
 import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import TriviaBye from './TriviaBye';
+import styles from './styles/TriviaEndStyles';
 
-const styles = {
-  root: {
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-  },
-  buttonContainer: {
-    width: "12.5%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "-.75rem"
-  },
-  button: {
-    width: "50%",
-    margin: ".5rem",
-    borderRadius: ".8rem",
-  }
-}
 
 function TriviaEnd({ score, classes, questions }) {
   const [open, setOpen] = useState(false);

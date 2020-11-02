@@ -42,7 +42,7 @@ function TriviaQuestions({ questions, classes }) {
       const question = questions[questionNumber].question
       const answers = questions[questionNumber].incorrect.concat(questions[questionNumber].correct)
       setQuestion({ questionName: question, answers: answers })
-    }, [questionNumber, questions, score])
+    }, [questionNumber, questions])
 
     function handleChange(e) {
         setValue(e.target.value)
