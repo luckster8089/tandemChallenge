@@ -1,12 +1,15 @@
 # Tandem Trivia
 
 By Lucky Ly <br>
-[Tandem Trivia Challenge ](https://tandemchallenge.herokuapp.com/) <br>
+[Tandem Trivia Challenge](https://tandemchallenge.herokuapp.com/) <br>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Description
 
 A game of trivia based off questions given by Tandem
+
+## System Dependencies 
+[Node >= 8.10 and npm >= 5.6](https://nodejs.org/en/)
 
 ## Getting Started
 
